@@ -168,6 +168,9 @@
 // NOTE: The M8 flood coolant control pin on analog pin 3 will still be functional regardless.
 // #define ENABLE_M7 // Disabled by default. Uncomment to enable.
 
+// Enables reporting positions in response to the M114 GCode command
+// #define ENABLE_M114 // Disabled by default. Uncomment to enable.
+
 // This option causes the feed hold input to act as a safety door switch. A safety door, when triggered,
 // immediately forces a feed hold and then safely de-energizes the machine. Resuming is blocked until
 // the safety door is re-engaged. When it is, Grbl will re-energize the machine and then resume on the

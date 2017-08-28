@@ -108,6 +108,11 @@ void report_echo_line_received(char *line);
 // Prints realtime status report
 void report_realtime_status();
 
+#ifdef ENABLE_M114
+  // Prints realtime position report
+  void report_realtime_position();
+#endif
+
 // Prints recorded probe position
 void report_probe_parameters();
 

@@ -280,6 +280,11 @@ uint8_t gc_execute_line(char *line)
               gc_block.modal.override = OVERRIDE_PARKING_MOTION;
               break;
           #endif
+          #ifdef ENABLE_M114
+            case 114:
+              report_realtime_position();
+              break;
+          #endif
           default: FAIL(STATUS_GCODE_UNSUPPORTED_COMMAND); // [Unsupported M command]
         }
 

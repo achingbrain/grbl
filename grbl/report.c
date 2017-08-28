@@ -643,3 +643,33 @@ void report_realtime_status()
 
   }
 #endif
+
+#ifdef ENABLE_M114
+  // Reports the current work position
+  void report_realtime_position()
+  {
+    int32_t current_position[N_AXIS]; // Copy current state of the system position variable
+    memcpy(current_position,sys_position,sizeof(sys_position));
+    float print_position[N_AXIS];
+    system_convert_array_steps_to_mpos(print_position,current_position);
+
+    float wco[N_AXIS];
+    uint8_t idx;
+    for (idx=0; idx<N_AXIS; idx++) {
+      if (idx == 0) { printPgmString(PSTR("X:")); }
+      if (idx == 1) { printPgmString(PSTR("Y:")); }
+      if (idx == 2) { printPgmString(PSTR("Z:")); }
+
+      // Apply work coordinate offsets and tool length offset to current position.
+      wco[idx] = gc_state.coord_system[idx]+gc_state.coord_offset[idx];
+      if (idx == TOOL_LENGTH_OFFSET_AXIS) { wco[idx] += gc_state.tool_length_offset; }
+      print_position[idx] -= wco[idx];
+
+      printFloat_CoordValue(print_position[idx]);
+
+      if (idx < (N_AXIS-1)) { serial_write(' '); }
+    }
+
+    report_util_line_feed();
+  }
+#endif
